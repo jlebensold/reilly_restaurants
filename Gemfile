@@ -28,7 +28,7 @@ gem 'foundation-rails'
 gem 'react-rails'
 gem 'flux-rails-assets'
 gem 'lodash-rails'
-gem 'sprockets-es6'
+gem 'sprockets-es6', '0.6.1'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
