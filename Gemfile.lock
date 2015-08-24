@@ -56,6 +56,8 @@ GEM
     debug_inspector (0.0.2)
     erubis (2.7.0)
     execjs (2.5.2)
+    flux-rails-assets (1.0.1)
+      railties (>= 3.1)
     font-awesome-rails (4.3.0.0)
       railties (>= 3.2, < 5.0)
     foundation-rails (5.5.2.1)
@@ -79,6 +81,8 @@ GEM
     kaminari (0.16.3)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
+    lodash-rails (3.10.0)
+      railties (>= 3.1)
     loofah (2.0.2)
       nokogiri (>= 1.5.9)
     mail (2.6.3)
@@ -179,8 +183,10 @@ PLATFORMS
 DEPENDENCIES
   ancestry
   byebug
+  flux-rails-assets
   foundation-rails
   jbuilder (~> 2.0)
+  lodash-rails
   rails (= 4.2.2)
   rails_admin
   react-rails
