@@ -1,6 +1,7 @@
 import CommentStore from '/stores/comment_store';
 import Actions from '/actions';
 import CommentList from '/components/comment_list';
+import CommentForm from '/components/comment_form';
 
 class CommentSection extends React.Component {
   constructor() {
@@ -21,7 +22,10 @@ class CommentSection extends React.Component {
   }
 
   render() {
-    return <CommentList />
+    return <div>
+      <CommentForm />
+      <CommentList />
+    </div>
   }
 
 }
