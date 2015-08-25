@@ -8,8 +8,20 @@ class CommentSection extends React.Component {
     this.store = new CommentStore()
   }
 
+  static get childContextTypes() {
+    return {
+      store: React.PropTypes.object.isRequired
+    }
+  }
+
+  getChildContext() {
+    return {
+      store: this.store
+    }
+  }
+
   render() {
-    return <CommentList store={this.store} />
+    return <CommentList />
   }
 
 }
