@@ -27,7 +27,7 @@ class CommentSection extends React.Component {
 
   render() {
     return <div>
-      <CommentForm />
+      <CommentForm isReplying={true} />
       <CommentList parent_id={null} />
     </div>
   }

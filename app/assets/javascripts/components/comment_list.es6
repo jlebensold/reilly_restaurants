@@ -14,11 +14,11 @@ class CommentList extends React.Component {
   }
 
   render() {
-    return <div>
+    return <ul>
         {this.context.store.comments(this.props.parent_id).map(function(comment, i) {
           return <Comment key={i} {... comment}  />;
         })}
-      </div>;
+      </ul>;
   }
 
   _onChange() {
