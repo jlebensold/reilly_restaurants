@@ -34,8 +34,8 @@ class CommentStore extends EventEmitter {
     this._comments[comment.id || this._comments.length] = comment;
   }
 
-  comments () {
-    return this._comments;
+  comments (parentId) {
+    return this._comments.filter( c => { return c && c.parent_id === parentId; })
   }
 
   addChangeListener (callback) {

@@ -28,7 +28,7 @@ class CommentSection extends React.Component {
   render() {
     return <div>
       <CommentForm />
-      <CommentList />
+      <CommentList parent_id={null} />
     </div>
   }
 

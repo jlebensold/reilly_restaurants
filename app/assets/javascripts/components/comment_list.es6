@@ -15,7 +15,7 @@ class CommentList extends React.Component {
 
   render() {
     return <div>
-        {this.context.store.comments().map(function(comment, i) {
+        {this.context.store.comments(this.props.parent_id).map(function(comment, i) {
           return <Comment key={i} {... comment}  />;
         })}
       </div>;
