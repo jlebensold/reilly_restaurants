@@ -9,6 +9,7 @@
   </div>
   <div class="columns medium-6">
     <h3>Comments</h3>
-    <div id="commentSection"></div>
+    <% props = "{restaurantId: #{@restaurant.id}, comments: #{raw(render(template: 'comments/index.json.jbuilder'))}}" %>
+    <%= client('CommentSection', 'cs', props)%>
   </div>
 </div>
