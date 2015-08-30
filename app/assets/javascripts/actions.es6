@@ -5,7 +5,8 @@ import Api from '/api'
 class Actions {
 
   constructor(restaurantId) {
-    this.restaurantId = restaurantId
+    this.restaurantId = restaurantId;
+    this.watchInterval = setInterval(this.watch.bind(this), 1000);
   }
 
   setComments(params) {
@@ -33,6 +34,12 @@ class Actions {
         comment: comment
       });
     })
+  }
+
+  watch() {
+    Api.get(`/restaurants/${this.restaurantId}/comments`).then( comments => {
+      this.setComments(comments)
+    });
   }
 }
 export default Actions
