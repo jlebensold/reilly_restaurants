@@ -5,6 +5,9 @@ config.output = {
   path: '../app/assets/javascripts/generated'
 };
 
+config.module.loaders.push(
+  {test: /\.jsx$/, exclude: /node_modules/, loader: 'babel-loader'},
+  {test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader'}
+);
+
 module.exports = config;
-
-
