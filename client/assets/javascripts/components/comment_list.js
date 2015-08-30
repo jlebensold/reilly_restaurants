@@ -1,4 +1,5 @@
 import Comment from './comment';
+import React from 'react';
 class CommentList extends React.Component {
   static get contextTypes() {
     return {

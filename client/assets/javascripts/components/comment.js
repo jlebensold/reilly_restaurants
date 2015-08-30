@@ -1,5 +1,6 @@
 import CommentForm from './comment_form';
 import CommentList from './comment_list';
+import React from 'react';
 class Comment extends React.Component{
   static get contextTypes() {
     return {
