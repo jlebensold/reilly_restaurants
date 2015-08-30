@@ -10,6 +10,10 @@
   <div class="columns medium-6">
     <h3>Comments</h3>
     <% props = JSON.parse("{\"restaurantId\": #{@restaurant.id}, \"comments\": #{raw(render(template: 'comments/index.json.jbuilder'))}}") %>
-    <%= isomorphic('CommentSection', 'cs_server', props)%>
+    <% if params[:client].present? %>
+      <%= client('CommentSection', 'cs', props) %>
+    <% else %>
+      <%= isomorphic('CommentSection', 'cs', props)%>
+    <% end %>
   </div>
 </div>

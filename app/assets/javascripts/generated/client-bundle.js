@@ -34065,7 +34065,7 @@
 	    _classCallCheck(this, Actions);
 
 	    this.restaurantId = restaurantId;
-	    //this.watchInterval = setInterval(this.watch.bind(this), 1000);
+	    this.watchInterval = setInterval(this.watch.bind(this), 1000);
 	  }
 
 	  _createClass(Actions, [{
