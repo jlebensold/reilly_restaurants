@@ -1,6 +1,6 @@
-import AppDispatcher from '/app_dispatcher';
-import Constants from '/constants';
-import Api from '/api'
+import AppDispatcher from './app_dispatcher';
+import Constants from './constants';
+import Api from './api'
 
 class Actions {
 
