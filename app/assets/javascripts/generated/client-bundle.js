@@ -20810,7 +20810,7 @@
 
 	var _storesComment_store2 = _interopRequireDefault(_storesComment_store);
 
-	var _actions = __webpack_require__(170);
+	var _actions = __webpack_require__(172);
 
 	var _actions2 = _interopRequireDefault(_actions);
 
@@ -20902,6 +20902,10 @@
 
 	var _events = __webpack_require__(169);
 
+	var _lodash = __webpack_require__(170);
+
+	var _lodash2 = _interopRequireDefault(_lodash);
+
 	var CommentStore = (function (_EventEmitter) {
 	  _inherits(CommentStore, _EventEmitter);
 
@@ -20955,7 +20959,7 @@
 	  }, {
 	    key: 'comments',
 	    value: function comments(parentId) {
-	      return _.chain(this._comments.filter(function (c) {
+	      return _lodash2['default'].chain(this._comments.filter(function (c) {
 	        return c && c.parent_id === parentId;
 	      })).sortBy('rank').reverse().value();
 	    }
@@ -21656,164 +21660,6 @@
 
 /***/ },
 /* 170 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
-
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-	var _app_dispatcher = __webpack_require__(164);
-
-	var _app_dispatcher2 = _interopRequireDefault(_app_dispatcher);
-
-	var _constants = __webpack_require__(168);
-
-	var _constants2 = _interopRequireDefault(_constants);
-
-	var _api = __webpack_require__(171);
-
-	var _api2 = _interopRequireDefault(_api);
-
-	var Actions = (function () {
-	  function Actions(restaurantId) {
-	    _classCallCheck(this, Actions);
-
-	    this.restaurantId = restaurantId;
-	    //this.watchInterval = setInterval(this.watch.bind(this), 1000);
-	  }
-
-	  _createClass(Actions, [{
-	    key: 'setComments',
-	    value: function setComments(params) {
-	      _app_dispatcher2['default'].dispatch({
-	        actionType: _constants2['default'].SET_COMMENTS,
-	        comments: params
-	      });
-	    }
-	  }, {
-	    key: 'upvoteComment',
-	    value: function upvoteComment(comment) {
-	      _api2['default'].put('/restaurants/' + this.restaurantId + '/comments/' + comment.id + '/upvote').then(function (comment) {
-	        _app_dispatcher2['default'].dispatch({
-	          actionType: _constants2['default'].UPVOTE_COMMENT,
-	          comment: comment
-	        });
-	      });
-	    }
-	  }, {
-	    key: 'addComment',
-	    value: function addComment(params) {
-	      _api2['default'].post('/restaurants/' + this.restaurantId + '/comments', {
-	        comment: params
-	      }).then(function (comment) {
-	        _app_dispatcher2['default'].dispatch({
-	          actionType: _constants2['default'].ADD_COMMENT,
-	          comment: comment
-	        });
-	      });
-	    }
-	  }, {
-	    key: 'watch',
-	    value: function watch() {
-	      var _this = this;
-
-	      _api2['default'].get('/restaurants/' + this.restaurantId + '/comments').then(function (comments) {
-	        _this.setComments(comments);
-	      });
-	    }
-	  }]);
-
-	  return Actions;
-	})();
-
-	exports['default'] = Actions;
-	module.exports = exports['default'];
-
-/***/ },
-/* 171 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
-
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-	var _lodash = __webpack_require__(172);
-
-	var _lodash2 = _interopRequireDefault(_lodash);
-
-	var Api = (function () {
-	  function Api() {
-	    _classCallCheck(this, Api);
-	  }
-
-	  _createClass(Api, null, [{
-	    key: 'token',
-	    value: function token() {
-	      var el = document.querySelector('meta[name="csrf-token"]');
-	      return el ? el.getAttribute('content') : '';
-	    }
-	  }, {
-	    key: 'headers',
-	    value: function headers() {
-	      return {
-	        'Accept': 'application/json',
-	        'Content-Type': 'application/json',
-	        'X-CSRF-Token': this.token(),
-	        'X-Requested-With': 'XMLHttpRequest'
-	      };
-	    }
-	  }, {
-	    key: 'get',
-	    value: function get(route, params) {
-	      return this.xhr(route, params, 'get');
-	    }
-	  }, {
-	    key: 'put',
-	    value: function put(route, params) {
-	      return this.xhr(route, params, 'put');
-	    }
-	  }, {
-	    key: 'post',
-	    value: function post(route, params) {
-	      return this.xhr(route, params, 'post');
-	    }
-	  }, {
-	    key: 'xhr',
-	    value: function xhr(route, params, verb) {
-	      return fetch(route + '.json', _lodash2['default'].merge({
-	        method: verb,
-	        credentials: 'include',
-	        headers: this.headers()
-	      }, { body: JSON.stringify(params) })).then(function (resp) {
-	        return resp.json();
-	      });
-	    }
-	  }]);
-
-	  return Api;
-	})();
-
-	exports['default'] = Api;
-	module.exports = exports['default'];
-
-/***/ },
-/* 172 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module, global) {/**
@@ -34168,10 +34014,10 @@
 	  }
 	}.call(this));
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(173)(module), (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(171)(module), (function() { return this; }())))
 
 /***/ },
-/* 173 */
+/* 171 */
 /***/ function(module, exports) {
 
 	module.exports = function(module) {
@@ -34185,6 +34031,164 @@
 		return module;
 	}
 
+
+/***/ },
+/* 172 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	var _app_dispatcher = __webpack_require__(164);
+
+	var _app_dispatcher2 = _interopRequireDefault(_app_dispatcher);
+
+	var _constants = __webpack_require__(168);
+
+	var _constants2 = _interopRequireDefault(_constants);
+
+	var _api = __webpack_require__(173);
+
+	var _api2 = _interopRequireDefault(_api);
+
+	var Actions = (function () {
+	  function Actions(restaurantId) {
+	    _classCallCheck(this, Actions);
+
+	    this.restaurantId = restaurantId;
+	    //this.watchInterval = setInterval(this.watch.bind(this), 1000);
+	  }
+
+	  _createClass(Actions, [{
+	    key: 'setComments',
+	    value: function setComments(params) {
+	      _app_dispatcher2['default'].dispatch({
+	        actionType: _constants2['default'].SET_COMMENTS,
+	        comments: params
+	      });
+	    }
+	  }, {
+	    key: 'upvoteComment',
+	    value: function upvoteComment(comment) {
+	      _api2['default'].put('/restaurants/' + this.restaurantId + '/comments/' + comment.id + '/upvote').then(function (comment) {
+	        _app_dispatcher2['default'].dispatch({
+	          actionType: _constants2['default'].UPVOTE_COMMENT,
+	          comment: comment
+	        });
+	      });
+	    }
+	  }, {
+	    key: 'addComment',
+	    value: function addComment(params) {
+	      _api2['default'].post('/restaurants/' + this.restaurantId + '/comments', {
+	        comment: params
+	      }).then(function (comment) {
+	        _app_dispatcher2['default'].dispatch({
+	          actionType: _constants2['default'].ADD_COMMENT,
+	          comment: comment
+	        });
+	      });
+	    }
+	  }, {
+	    key: 'watch',
+	    value: function watch() {
+	      var _this = this;
+
+	      _api2['default'].get('/restaurants/' + this.restaurantId + '/comments').then(function (comments) {
+	        _this.setComments(comments);
+	      });
+	    }
+	  }]);
+
+	  return Actions;
+	})();
+
+	exports['default'] = Actions;
+	module.exports = exports['default'];
+
+/***/ },
+/* 173 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	var _lodash = __webpack_require__(170);
+
+	var _lodash2 = _interopRequireDefault(_lodash);
+
+	var Api = (function () {
+	  function Api() {
+	    _classCallCheck(this, Api);
+	  }
+
+	  _createClass(Api, null, [{
+	    key: 'token',
+	    value: function token() {
+	      var el = document.querySelector('meta[name="csrf-token"]');
+	      return el ? el.getAttribute('content') : '';
+	    }
+	  }, {
+	    key: 'headers',
+	    value: function headers() {
+	      return {
+	        'Accept': 'application/json',
+	        'Content-Type': 'application/json',
+	        'X-CSRF-Token': this.token(),
+	        'X-Requested-With': 'XMLHttpRequest'
+	      };
+	    }
+	  }, {
+	    key: 'get',
+	    value: function get(route, params) {
+	      return this.xhr(route, params, 'get');
+	    }
+	  }, {
+	    key: 'put',
+	    value: function put(route, params) {
+	      return this.xhr(route, params, 'put');
+	    }
+	  }, {
+	    key: 'post',
+	    value: function post(route, params) {
+	      return this.xhr(route, params, 'post');
+	    }
+	  }, {
+	    key: 'xhr',
+	    value: function xhr(route, params, verb) {
+	      return fetch(route + '.json', _lodash2['default'].merge({
+	        method: verb,
+	        credentials: 'include',
+	        headers: this.headers()
+	      }, { body: JSON.stringify(params) })).then(function (resp) {
+	        return resp.json();
+	      });
+	    }
+	  }]);
+
+	  return Api;
+	})();
+
+	exports['default'] = Api;
+	module.exports = exports['default'];
 
 /***/ }
 /******/ ]);

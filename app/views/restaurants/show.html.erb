@@ -9,7 +9,7 @@
   </div>
   <div class="columns medium-6">
     <h3>Comments</h3>
-    <% props = "{restaurantId: #{@restaurant.id}, comments: #{raw(render(template: 'comments/index.json.jbuilder'))}}" %>
-    <%= client('CommentSection', 'cs', props)%>
+    <% props = JSON.parse("{\"restaurantId\": #{@restaurant.id}, \"comments\": #{raw(render(template: 'comments/index.json.jbuilder'))}}") %>
+    <%= isomorphic('CommentSection', 'cs_server', props)%>
   </div>
 </div>
