@@ -1,4 +1,6 @@
 import _ from 'lodash';
+import fetch from 'isomorphic-fetch';
+import Promise from 'es6-promise';
 class Api {
 
   static token() {
