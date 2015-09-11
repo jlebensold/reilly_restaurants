@@ -1,14 +1,10 @@
 import React from 'react';
 class CommentForm extends React.Component {
 
-  static get contextTypes() {
-    return {
-      actions: React.PropTypes.object.isRequired
-    }
-  }
 
   static get propTypes() {
     return {
+      addComment: React.PropTypes.func.isRequired,
       isReplying: React.PropTypes.bool,
       onCommentSubmitted: React.PropTypes.func,
       parent_id: React.PropTypes.number
@@ -23,7 +19,7 @@ class CommentForm extends React.Component {
 
   submitComment(event) {
     event.preventDefault()
-    this.context.actions.addComment(_.merge(this.state, { parent_id: this.props.parent_id}));
+    this.props.addComment(this.props.restaurantId, _.merge(this.state, {parent_id: this.props.parent_id}));
     this.setState(this.defaultState);
     if (this.props.onCommentSubmitted) {
       this.props.onCommentSubmitted();
